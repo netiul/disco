@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace bitExpert\Disco\Proxy\Configuration\MethodGenerator;
 
 use bitExpert\Disco\Annotations\Parameter;
-use Zend\Code\Generator\MethodGenerator;
+use Laminas\Code\Generator\MethodGenerator;
 
 /**
  * Base class for all annotations that are parameter-aware.
@@ -34,7 +34,6 @@ class ParameterAwareMethodGenerator extends MethodGenerator
     ): string {
         $parameters = [];
         foreach ($methodParameters as $methodParameter) {
-            /** @var Parameter $methodParameter */
             $defaultValue = $methodParameter->getDefaultValue();
             switch (\gettype($defaultValue)) {
                 case 'string':
@@ -47,6 +46,7 @@ class ParameterAwareMethodGenerator extends MethodGenerator
                     $defaultValue = 'null';
                     break;
                 default:
+                    $defaultValue = (string) $defaultValue;
                     break;
             }
 

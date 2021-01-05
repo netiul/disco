@@ -13,10 +13,11 @@ declare(strict_types=1);
 namespace bitExpert\Disco\Proxy\LazyBean;
 
 use Iterator;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ProxyManager\Proxy\VirtualProxyInterface;
 use ReflectionClass;
-use Zend\Code\Generator\ClassGenerator;
+use Laminas\Code\Generator\ClassGenerator;
 
 /**
  * Unit tests for {@link \bitExpert\Disco\Proxy\LazyBean\LazyBeanGenerator}.
@@ -26,9 +27,9 @@ class LazyBeanGeneratorUnitTest extends TestCase
     /**
      * @test
      */
-    public function generateWithInterfaceAsOriginalObject()
+    public function generateWithInterfaceAsOriginalObject(): void
     {
-        /** @var ClassGenerator&\PHPUnit\Framework\MockObject\MockObject $classGenerator */
+        /** @var ClassGenerator&MockObject $classGenerator */
         $classGenerator = $this->createMock(ClassGenerator::class);
         $classGenerator->expects(self::once())
             ->method('setImplementedInterfaces')

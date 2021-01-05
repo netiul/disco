@@ -23,7 +23,7 @@ class AliasUnitTest extends TestCase
     /**
      * @test
      */
-    public function aliasCanBeNamedAlias()
+    public function aliasCanBeNamedAlias(): void
     {
         $namedAlias = new Alias(['value' => ['name' => 'someAliasName']]);
 
@@ -34,7 +34,7 @@ class AliasUnitTest extends TestCase
     /**
      * @test
      */
-    public function aliasCannotBeNamedAliasAndTypeAlias()
+    public function aliasCannotBeNamedAliasAndTypeAlias(): void
     {
         self::expectException(AnnotationException::class);
         self::expectExceptionMessage('Type alias should not have a name!');
@@ -45,7 +45,7 @@ class AliasUnitTest extends TestCase
     /**
      * @test
      */
-    public function aliasCanBeTypeAlias()
+    public function aliasCanBeTypeAlias(): void
     {
         $typeAlias = new Alias(['value' => ['type' => true]]);
 
@@ -56,7 +56,7 @@ class AliasUnitTest extends TestCase
     /**
      * @test
      */
-    public function aliasShouldBeNamedOrTypeAlias()
+    public function aliasShouldBeNamedOrTypeAlias(): void
     {
         self::expectException(AnnotationException::class);
         self::expectExceptionMessage('Alias should either be a named alias or a type alias!');
@@ -67,24 +67,22 @@ class AliasUnitTest extends TestCase
     /**
      * @test
      * @dataProvider invalidNameProvider
+     * @param mixed $name
      */
-    public function aliasNameCannotBeEmpty($name)
+    public function aliasNameCannotBeEmpty($name): void
     {
         self::expectException(AnnotationException::class);
         self::expectExceptionMessage('Alias should either be a named alias or a type alias!');
 
+        /** @psalm-suppress InvalidArgument - null for `$name` is not allowed to be null but we test it anyway since the name property is nullable */
         new Alias(['value' => ['name' => $name, 'type' => false]]);
     }
 
-    public function invalidNameProvider()
+    public function invalidNameProvider(): array
     {
         return [
             [''],
-            [0],
-            [0.0],
-            [false],
             [null],
-            [[]],
         ];
     }
 }

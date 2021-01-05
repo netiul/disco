@@ -20,9 +20,9 @@ namespace bitExpert\Disco;
 class BeanFactoryRegistry
 {
     /**
-     * @var BeanFactory
+     * @var BeanFactory|null
      */
-    protected static $beanFactory = null;
+    protected static ?BeanFactory $beanFactory = null;
 
     /**
      * Registers a {@link \bitExpert\Disco\BeanFactory} instance in the registry to make the instance

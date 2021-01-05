@@ -20,12 +20,14 @@ use bitExpert\Disco\Proxy\Configuration\PropertyGenerator\BeanPostProcessorsProp
 use bitExpert\Disco\Proxy\Configuration\PropertyGenerator\ForceLazyInitProperty;
 use bitExpert\Disco\Proxy\Configuration\PropertyGenerator\SessionBeansProperty;
 use bitExpert\Disco\Proxy\LazyBean\LazyBeanFactory;
+use Laminas\Code\Generator\Exception\InvalidArgumentException;
 use ProxyManager\Exception\InvalidProxiedClassException;
 use ProxyManager\Proxy\LazyLoadingInterface;
+use ReflectionNamedType;
 use ReflectionType;
-use Zend\Code\Generator\MethodGenerator;
-use Zend\Code\Generator\ParameterGenerator;
-use Zend\Code\Reflection\MethodReflection;
+use Laminas\Code\Generator\MethodGenerator;
+use Laminas\Code\Generator\ParameterGenerator;
+use Laminas\Code\Reflection\MethodReflection;
 
 /**
  * The bean method generator will generate a method for each bean definition in the generated
@@ -48,8 +50,8 @@ class BeanMethod extends ParameterAwareMethodGenerator
      * @param GetParameter $parameterValuesMethod
      * @param WrapBeanAsLazy $wrapBeanAsLazy
      * @return MethodGenerator
-     * @throws \Zend\Code\Generator\Exception\InvalidArgumentException
-     * @throws \ProxyManager\Exception\InvalidProxiedClassException
+     * @throws InvalidArgumentException
+     * @throws InvalidProxiedClassException
      */
     public static function generateMethod(
         MethodReflection $originalMethod,
@@ -71,17 +73,26 @@ class BeanMethod extends ParameterAwareMethodGenerator
                 )
             );
         }
-        $beanType = (string) $beanType;
+        if (!($beanType instanceof ReflectionNamedType)) {
+            throw new InvalidProxiedClassException(
+                sprintf(
+                    'Method "%s" on "%s" has an unsupported return type hint!',
+                    $originalMethod->name,
+                    $originalMethod->class
+                )
+            );
+        }
+        $beanType = $beanType->getName();
 
         $method = static::fromReflection($originalMethod);
         $methodParams = static::convertMethodParamsToString($beanMetadata->getParameters(), $parameterValuesMethod);
         $beanId = $originalMethod->name;
         $body = '';
 
-        if (in_array($beanType, ['array', 'callable', 'bool', 'float', 'int', 'string'], true)) {
+        if (\in_array($beanType, ['array', 'callable', 'bool', 'float', 'int', 'string'], true)) {
             // return type is a primitive, simply call parent method and return immediately
             $body .= 'return parent::' . $beanId . '(' . $methodParams . ');' . PHP_EOL;
-        } elseif (class_exists($beanType) || interface_exists($beanType)) {
+        } elseif (\class_exists($beanType) || \interface_exists($beanType)) {
             if ($beanMetadata->isLazy()) {
                 $body = static::generateLazyBeanCode(
                     '',
@@ -127,7 +138,7 @@ class BeanMethod extends ParameterAwareMethodGenerator
      * @override Enforces generation of \ProxyManager\Generator\MethodGenerator.
      *
      * {@inheritDoc}
-     * @throws \Zend\Code\Generator\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public static function fromReflection(MethodReflection $reflectionMethod): MethodGenerator
     {

@@ -46,7 +46,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -57,7 +57,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingNonExistentBeanThrowsException()
+    public function retrievingNonExistentBeanThrowsException(): void
     {
         self::expectException(BeanNotFoundException::class);
 
@@ -67,7 +67,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingBeanWithEmptyStringThrowsException()
+    public function retrievingBeanWithEmptyStringThrowsException(): void
     {
         self::expectException(BeanException::class);
 
@@ -77,17 +77,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingBeanWithNonStringThrowsException()
-    {
-        self::expectException(BeanException::class);
-
-        $this->beanFactory->get(3);
-    }
-
-    /**
-     * @test
-     */
-    public function checkForExistingBeanReturnsTrue()
+    public function checkForExistingBeanReturnsTrue(): void
     {
         self::assertTrue($this->beanFactory->has('nonSingletonNonLazyRequestBean'));
     }
@@ -95,7 +85,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function checkForBeanWithEmptyIdWillReturnFalse()
+    public function checkForBeanWithEmptyIdWillReturnFalse(): void
     {
         $this->assertFalse($this->beanFactory->has(''));
     }
@@ -103,15 +93,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function checkForBeanWithNonStringIdWillReturnFalse()
-    {
-        $this->assertFalse($this->beanFactory->has(1));
-    }
-
-    /**
-     * @test
-     */
-    public function checkForNonExistingBeanReturnsFalse()
+    public function checkForNonExistingBeanReturnsFalse(): void
     {
         self::assertFalse($this->beanFactory->has('serviceWhichDoesNotExist'));
     }
@@ -119,7 +101,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingNonSingletonBeanReturnsDifferentInstances()
+    public function retrievingNonSingletonBeanReturnsDifferentInstances(): void
     {
         $bean = $this->beanFactory->get('nonSingletonNonLazyRequestBean');
         $bean2 = $this->beanFactory->get('nonSingletonNonLazyRequestBean');
@@ -130,7 +112,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingNonSingletonLazyBeanReturnsDifferentInstances()
+    public function retrievingNonSingletonLazyBeanReturnsDifferentInstances(): void
     {
         $bean = $this->beanFactory->get('nonSingletonLazyRequestBean');
         $bean2 = $this->beanFactory->get('nonSingletonLazyRequestBean');
@@ -146,7 +128,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingSingletonLazyBeanReturnsTheSameInstances()
+    public function retrievingSingletonLazyBeanReturnsTheSameInstances(): void
     {
         $bean = $this->beanFactory->get('singletonLazyRequestBean');
         $bean2 = $this->beanFactory->get('singletonLazyRequestBean');
@@ -162,7 +144,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingSingletonNonLazySessionBeanReturnsDependencyAsProxy()
+    public function retrievingSingletonNonLazySessionBeanReturnsDependencyAsProxy(): void
     {
         $bean = $this->beanFactory->get('singletonNonLazySessionBean');
 
@@ -174,7 +156,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
      * @runInSeparateProcess
      * @preserveGlobalState disabled
      */
-    public function retrievingSingletonDependencyMatchesDirectBeanAccess()
+    public function retrievingSingletonDependencyMatchesDirectBeanAccess(): void
     {
         $dependency = $this->beanFactory->get('singletonNonLazyRequestBean');
         $bean = $this->beanFactory->get('singletonNonLazySessionBean');
@@ -188,7 +170,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function sessionBeanFetchesDependencyFromBeanFactoryDuringWakeup()
+    public function sessionBeanFetchesDependencyFromBeanFactoryDuringWakeup(): void
     {
         $dependency = $this->beanFactory->get('singletonNonLazyRequestBean');
         $beanBefore = $this->beanFactory->get('singletonNonLazySessionBean');
@@ -208,7 +190,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function initializedBeanHookGetsCalledOnlyWhenBeanGetsCreated()
+    public function initializedBeanHookGetsCalledOnlyWhenBeanGetsCreated(): void
     {
         $bean = $this->beanFactory->get('singletonInitializedService');
         self::assertEquals(1, $bean->postInitCnt);
@@ -221,7 +203,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function initializedBeanHookGetsCalledOnlyWhenLazyBeanGetsCreated()
+    public function initializedBeanHookGetsCalledOnlyWhenLazyBeanGetsCreated(): void
     {
         $bean = $this->beanFactory->get('singletonLazyInitializedService');
         self::assertEquals(1, $bean->postInitCnt);
@@ -234,7 +216,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function postProcessorHookRunsAfterBeanCreation()
+    public function postProcessorHookRunsAfterBeanCreation(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithPostProcessor::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -246,7 +228,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function postProcessorHookRunsAfterLazyBeanCreation()
+    public function postProcessorHookRunsAfterLazyBeanCreation(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithPostProcessor::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -258,7 +240,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function beanFactoryPostProcessorAcceptsParameters()
+    public function beanFactoryPostProcessorAcceptsParameters(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(
             BeanConfigurationWithParameterizedPostProcessor::class,
@@ -274,7 +256,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function beanFactoryPostProcessorCanBeConfiguredWithParameterizedDependency()
+    public function beanFactoryPostProcessorCanBeConfiguredWithParameterizedDependency(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(
             BeanConfigurationWithPostProcessorAndParameterizedDependency::class,
@@ -291,7 +273,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function parameterPassedToBeanFactoryGetsInjectedInBean()
+    public function parameterPassedToBeanFactoryGetsInjectedInBean(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(
             BeanConfigurationWithParameters::class,
@@ -306,7 +288,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function nestedParameterKeyPassedToBeanFactoryGetsInjectedInBean()
+    public function nestedParameterKeyPassedToBeanFactoryGetsInjectedInBean(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(
             BeanConfigurationWithParameters::class,
@@ -328,7 +310,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function missingRequiredParameterWillThrowException()
+    public function missingRequiredParameterWillThrowException(): void
     {
         self::expectException(BeanException::class);
 
@@ -341,7 +323,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function missingOptionalParameter()
+    public function missingOptionalParameter(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithParameters::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -353,7 +335,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function defaultValueOfParameterDefinitionWillBeUsedWhenNoParameterWasGiven()
+    public function defaultValueOfParameterDefinitionWillBeUsedWhenNoParameterWasGiven(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithParameters::class, []);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -365,7 +347,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function subclassConfigurationCanBeCorrectlyEvaluated()
+    public function subclassConfigurationCanBeCorrectlyEvaluated(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationSubclass::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -377,7 +359,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function traitConfigurationCanBeCorrectlyEvaluated()
+    public function traitConfigurationCanBeCorrectlyEvaluated(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationTrait::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -389,7 +371,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function protectedSingletonDependencyAlwaysReturnsSameInstance()
+    public function protectedSingletonDependencyAlwaysReturnsSameInstance(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithProtectedMethod::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -403,7 +385,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function protectedNonSingletonDependencyReturnsDifferentInstance()
+    public function protectedNonSingletonDependencyReturnsDifferentInstance(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithProtectedMethod::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -417,7 +399,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function protectedDependencyNotVisibleToTheCaller()
+    public function protectedDependencyNotVisibleToTheCaller(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithProtectedMethod::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -428,7 +410,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function throwsExceptionIfTypeOfReturnedObjectIsNotExpectedOfNonLazyBean()
+    public function throwsExceptionIfTypeOfReturnedObjectIsNotExpectedOfNonLazyBean(): void
     {
         self::expectException(BeanException::class);
 
@@ -441,7 +423,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function throwsExceptionIfNonLazyBeanMethodDoesNotReturnAnything()
+    public function throwsExceptionIfNonLazyBeanMethodDoesNotReturnAnything(): void
     {
         self::expectException(BeanException::class);
 
@@ -454,7 +436,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function throwsExceptionIfTypeOfReturnedObjectIsNotExpectedOfLazyBean()
+    public function throwsExceptionIfTypeOfReturnedObjectIsNotExpectedOfLazyBean(): void
     {
         self::expectException(BeanException::class);
 
@@ -468,7 +450,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function throwsExceptionIfLazyBeanMethodDoesNotReturnAnything()
+    public function throwsExceptionIfLazyBeanMethodDoesNotReturnAnything(): void
     {
         self::expectException(BeanException::class);
 
@@ -482,7 +464,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingArrayPrimitive()
+    public function retrievingArrayPrimitive(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithPrimitives::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -494,7 +476,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingCallablePrimitive()
+    public function retrievingCallablePrimitive(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithPrimitives::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -506,7 +488,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingBoolPrimitive()
+    public function retrievingBoolPrimitive(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithPrimitives::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -518,7 +500,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingFlotPrimitive()
+    public function retrievingFlotPrimitive(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithPrimitives::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -530,7 +512,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingIntPrimitive()
+    public function retrievingIntPrimitive(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithPrimitives::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -542,7 +524,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingStringPrimitive()
+    public function retrievingStringPrimitive(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithPrimitives::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -554,7 +536,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingBeanWithStringInjected()
+    public function retrievingBeanWithStringInjected(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithPrimitives::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -568,7 +550,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
      * @test
      * @dataProvider beanAliasProvider
      */
-    public function retrievingBeanByAlias($beanId, $beanType)
+    public function retrievingBeanByAlias(string $beanId, string $beanType): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithAliases::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -580,7 +562,7 @@ class AnnotationBeanFactoryUnitTest extends TestCase
     /**
      * @test
      */
-    public function retrievingProtectedBeanByAlias()
+    public function retrievingProtectedBeanByAlias(): void
     {
         $this->beanFactory = new AnnotationBeanFactory(BeanConfigurationWithAliases::class);
         BeanFactoryRegistry::register($this->beanFactory);
@@ -590,7 +572,10 @@ class AnnotationBeanFactoryUnitTest extends TestCase
         self::assertInstanceOf(SampleService::class, $this->beanFactory->get('aliasIsPublicForInternalService'));
     }
 
-    public function beanAliasProvider()
+    /**
+     * @return array<int, array<int, string>>
+     */
+    public function beanAliasProvider(): array
     {
         return [
             ['\my\Custom\Namespace', SampleService::class],

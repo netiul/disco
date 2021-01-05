@@ -54,7 +54,7 @@ class BeanConfigurationWithProtectedMethod
         return new SampleService();
     }
 
-    protected function nonDiRelevantFunction()
+    protected function nonDiRelevantFunction(): void
     {
         // Empty on purpose
     }

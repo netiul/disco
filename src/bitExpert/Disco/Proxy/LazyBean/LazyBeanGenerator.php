@@ -39,10 +39,10 @@ use ProxyManager\ProxyGenerator\Util\ProxiedMethodsFilter;
 use ProxyManager\ProxyGenerator\ValueHolder\MethodGenerator\GetWrappedValueHolderValue;
 use ReflectionClass;
 use ReflectionMethod;
-use Zend\Code\Generator\ClassGenerator;
-use Zend\Code\Generator\Exception\InvalidArgumentException;
-use Zend\Code\Generator\MethodGenerator;
-use Zend\Code\Reflection\MethodReflection;
+use Laminas\Code\Generator\ClassGenerator;
+use Laminas\Code\Generator\Exception\InvalidArgumentException;
+use Laminas\Code\Generator\MethodGenerator;
+use Laminas\Code\Reflection\MethodReflection;
 
 /**
  * Generator for proxies implementing {@link \ProxyManager\Proxy\VirtualProxyInterface}.
@@ -69,7 +69,7 @@ class LazyBeanGenerator implements ProxyGeneratorInterface
         }
 
         $classGenerator->setImplementedInterfaces($interfaces);
-        $classGenerator->addPropertyFromGenerator($valueHolder = new ValueHolderProperty());
+        $classGenerator->addPropertyFromGenerator($valueHolder = new ValueHolderProperty($originalClass));
         $classGenerator->addPropertyFromGenerator($valueHolderBeanId = new ValueHolderBeanIdProperty());
         $classGenerator->addPropertyFromGenerator($initializer = new InitializerProperty());
         $classGenerator->addPropertyFromGenerator($publicProperties);
@@ -81,6 +81,7 @@ class LazyBeanGenerator implements ProxyGeneratorInterface
             array_merge(
                 array_map(
                     function (ReflectionMethod $method) use ($initializer, $valueHolder) {
+                        /** @var class-string $method->class */
                         return LazyLoadingMethodInterceptor::generateMethod(
                             new MethodReflection($method->class, $method->getName()),
                             $initializer,

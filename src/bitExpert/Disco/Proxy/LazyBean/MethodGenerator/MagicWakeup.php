@@ -16,8 +16,8 @@ use bitExpert\Disco\BeanFactoryRegistry;
 use ProxyManager\Generator\MagicMethodGenerator;
 use ProxyManager\Proxy\VirtualProxyInterface;
 use ReflectionClass;
-use Zend\Code\Generator\Exception\InvalidArgumentException;
-use Zend\Code\Generator\PropertyGenerator;
+use Laminas\Code\Generator\Exception\InvalidArgumentException;
+use Laminas\Code\Generator\PropertyGenerator;
 
 /**
  * `__wakeup` method for lazy loading value holder objects. Will fetch the
@@ -27,7 +27,7 @@ use Zend\Code\Generator\PropertyGenerator;
 class MagicWakeup extends MagicMethodGenerator
 {
     /**
-     * Creates a new {@link \bitExpert\Disco\Proxy\MethodGenerator\MagicWakeup}.
+     * Creates a new {@link \bitExpert\Disco\Proxy\LazyBean\MethodGenerator\MagicWakeup}.
      *
      * @param ReflectionClass $originalClass
      * @param PropertyGenerator $valueHolderProperty

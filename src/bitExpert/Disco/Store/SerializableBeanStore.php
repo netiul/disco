@@ -19,9 +19,9 @@ namespace bitExpert\Disco\Store;
 class SerializableBeanStore implements BeanStore
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
-    protected $beans;
+    protected array $beans;
 
     /**
      * Creates a new {@link \bitExpert\Disco\Store\SerializableBeanStore}.

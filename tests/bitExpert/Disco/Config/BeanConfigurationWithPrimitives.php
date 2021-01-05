@@ -14,7 +14,6 @@ namespace bitExpert\Disco\Config;
 
 use bitExpert\Disco\Annotations\Bean;
 use bitExpert\Disco\Annotations\Configuration;
-use bitExpert\Disco\Annotations\Parameters;
 use bitExpert\Disco\Helper\SampleService;
 
 /**
@@ -24,6 +23,8 @@ class BeanConfigurationWithPrimitives
 {
     /**
      * @Bean
+     *
+     * @return array<mixed>
      */
     public function arrayPrimitive(): array
     {

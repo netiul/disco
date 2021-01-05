@@ -39,7 +39,7 @@ class BeanConfigurationWithPostProcessorAndParameterizedDependency
      *   }
      * })
      */
-    public function dependency($test = ''): \stdClass
+    public function dependency(string $test = ''): \stdClass
     {
         $object = new \stdClass();
         $object->property = $test;

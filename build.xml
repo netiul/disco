@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <project name="disco" basedir="." default="security:check">
-    <property name="securitychecker.endpoint" value="http://security.sensiolabs.org/check_lock" />
+    <property name="securitychecker.endpoint" value="https://security.symfony.com/check_lock" />
+    <property name="securitychecker.lockfile" value="composer.lock" />
     <import file="vendor/bitexpert/phing-securitychecker/build.xml" />
 
     <target name="sniff">

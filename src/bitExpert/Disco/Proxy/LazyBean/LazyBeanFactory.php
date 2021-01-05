@@ -25,19 +25,20 @@ class LazyBeanFactory extends AbstractBaseFactory
     /**
      * @var LazyBeanGenerator|null
      */
-    private $generator;
+    private ?LazyBeanGenerator $generator = null;
+
     /**
      * @var string
      */
-    private $beanId;
+    private string $beanId;
 
     /**
      * Creates a new {@link \bitExpert\Disco\Proxy\LazyBean\LazyBeanFactory}.
      *
      * @param string $beanId
-     * @param \ProxyManager\Configuration $configuration
+     * @param Configuration|null $configuration
      */
-    public function __construct($beanId, Configuration $configuration = null)
+    public function __construct(string $beanId, Configuration $configuration = null)
     {
         parent::__construct($configuration);
 
@@ -45,7 +46,9 @@ class LazyBeanFactory extends AbstractBaseFactory
     }
 
     /**
-     * @param string  $className
+     * @psalm-param class-string $className
+     *
+     * @param string $className
      * @param Closure $initializer
      *
      * @return object
@@ -54,12 +57,10 @@ class LazyBeanFactory extends AbstractBaseFactory
     {
         $proxyClassName = $this->generateProxy($className);
 
+        /** @psalm-suppress MixedMethodCall */
         return new $proxyClassName($this->beanId, $initializer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getGenerator(): ProxyGeneratorInterface
     {
         return $this->generator ?: $this->generator = new LazyBeanGenerator();

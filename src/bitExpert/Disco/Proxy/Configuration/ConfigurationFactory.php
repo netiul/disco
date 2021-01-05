@@ -24,7 +24,7 @@ class ConfigurationFactory extends AbstractBaseFactory
     /**
      * @var ConfigurationGenerator
      */
-    private $generator;
+    private ConfigurationGenerator $generator;
 
     /**
      * Creates a new {@link \bitExpert\Disco\Proxy\Configuration\ConfigurationFactory}.
@@ -40,10 +40,16 @@ class ConfigurationFactory extends AbstractBaseFactory
 
     /**
      * Creates an instance of the given $configClassName.
+     * @psalm-template ConfigurationClass of object
+     *
+     * @psalm-param class-string<ConfigurationClass> $configClassName
      *
      * @param BeanFactoryConfiguration $config
-     * @param string $configClassName name of the configuration class
-     * @param array $parameters
+     * @param string $configClassName
+     * @param list<scalar|null> $parameters
+     *
+     * @psalm-suppress MoreSpecificReturnType - Psalm cannot know ConfigurationGenerator makes the Proxy implement
+     *                                          the AliasContainerInterface interface.
      * @return AliasContainerInterface
      */
     public function createInstance(
@@ -52,12 +58,13 @@ class ConfigurationFactory extends AbstractBaseFactory
         array $parameters = []
     ): AliasContainerInterface {
         $proxyClassName = $this->generateProxy($configClassName);
+        /**
+         * @psalm-suppress LessSpecificReturnStatement
+         * @psalm-suppress MixedMethodCall
+         */
         return new $proxyClassName($config, $parameters);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     protected function getGenerator(): ProxyGeneratorInterface
     {
         return $this->generator;

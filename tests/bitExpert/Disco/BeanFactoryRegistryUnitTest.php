@@ -23,7 +23,7 @@ class BeanFactoryRegistryUnitTest extends TestCase
     /**
      * @test
      */
-    public function returnsNullWhenNotInitialized()
+    public function returnsNullWhenNotInitialized(): void
     {
         $reflectedClass = new \ReflectionClass(BeanFactoryRegistry::class);
         $reflectedProperty = $reflectedClass->getProperty('beanFactory');
@@ -32,10 +32,11 @@ class BeanFactoryRegistryUnitTest extends TestCase
 
         $this->assertNull(BeanFactoryRegistry::getInstance());
     }
+
     /**
      * @test
      */
-    public function returnsRegisteredInstance()
+    public function returnsRegisteredInstance(): void
     {
         $beanFactory = new AnnotationBeanFactory(BeanConfiguration::class);
         BeanFactoryRegistry::register($beanFactory);

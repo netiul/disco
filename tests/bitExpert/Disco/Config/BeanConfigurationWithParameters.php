@@ -29,6 +29,8 @@ class BeanConfigurationWithParameters
      *     @Parameter({"name" = "test"})
      *   }
      * })
+     *
+     * @param mixed $test
      */
     public function sampleServiceWithParam($test = ''): SampleService
     {
@@ -44,6 +46,8 @@ class BeanConfigurationWithParameters
      *     @Parameter({"name" = "test", "default" = null})
      *   }
      * })
+     *
+     * @param mixed $test
      */
     public function sampleServiceWithParamNull($test = ''): SampleService
     {
@@ -59,6 +63,8 @@ class BeanConfigurationWithParameters
      *     @Parameter({"name" = "test", "default" = true})
      *   }
      * })
+     *
+     * @param mixed $test
      */
     public function sampleServiceWithParamBool($test = ''): SampleService
     {
@@ -74,6 +80,8 @@ class BeanConfigurationWithParameters
      *     @Parameter({"name" = "test", "default" = 0})
      *   }
      * })
+     *
+     * @param mixed $test
      */
     public function sampleServiceWithParamEmpty($test = ''): SampleService
     {
@@ -89,6 +97,8 @@ class BeanConfigurationWithParameters
      *     @Parameter({"name" = "test.nested.key"})
      *   }
      * })
+     *
+     * @param mixed $test
      */
     public function sampleServiceWithNestedParamKey($test = ''): SampleService
     {
@@ -104,6 +114,8 @@ class BeanConfigurationWithParameters
      *     @Parameter({"name" = "test", "default" = "myDefaultValue"})
      *   }
      * })
+     *
+     * @param mixed $test
      */
     public function sampleServiceWithParamDefaultValue($test = ''): SampleService
     {
@@ -119,6 +131,8 @@ class BeanConfigurationWithParameters
      *     @Parameter({"name" = "test", "required" = false})
      *   }
      * })
+     *
+     * @param mixed $test
      */
     public function sampleServiceWithoutRequiredParam($test = ''): SampleService
     {

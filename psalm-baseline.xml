@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.3.1@2feba22a005a18bf31d4c7b9bdb9252c73897476">
+  <file src="src/bitExpert/Disco/AnnotationBeanFactory.php">
+    <MixedAssignment occurrences="2">
+      <code>$instance</code>
+      <code>$instance</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/ConfigurationGenerator.php">
+    <DeprecatedMethod occurrences="5">
+      <code>AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Alias.php')</code>
+      <code>AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Bean.php')</code>
+      <code>AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/BeanPostProcessor.php')</code>
+      <code>AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Configuration.php')</code>
+      <code>AnnotationRegistry::registerFile(__DIR__ . '/../../Annotations/Parameter.php')</code>
+    </DeprecatedMethod>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/MethodGenerator/BeanMethod.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>BeanMethod</code>
+      <code>BeanMethod</code>
+      <code>BeanMethod</code>
+      <code>BeanMethod</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/MethodGenerator/BeanPostProcessorMethod.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>BeanPostProcessorMethod</code>
+      <code>BeanPostProcessorMethod</code>
+      <code>BeanPostProcessorMethod</code>
+      <code>BeanPostProcessorMethod</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/MethodGenerator/Constructor.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>Constructor</code>
+      <code>Constructor</code>
+      <code>Constructor</code>
+      <code>Constructor</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/MethodGenerator/GetAlias.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>GetAlias</code>
+      <code>GetAlias</code>
+      <code>GetAlias</code>
+      <code>GetAlias</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/MethodGenerator/GetParameter.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>GetParameter</code>
+      <code>GetParameter</code>
+      <code>GetParameter</code>
+      <code>GetParameter</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/MethodGenerator/HasAlias.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>HasAlias</code>
+      <code>HasAlias</code>
+      <code>HasAlias</code>
+      <code>HasAlias</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/MethodGenerator/MagicSleep.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>MagicSleep</code>
+      <code>MagicSleep</code>
+      <code>MagicSleep</code>
+      <code>MagicSleep</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/MethodGenerator/ParameterAwareMethodGenerator.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>ParameterAwareMethodGenerator</code>
+      <code>ParameterAwareMethodGenerator</code>
+      <code>ParameterAwareMethodGenerator</code>
+      <code>ParameterAwareMethodGenerator</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/MethodGenerator/WrapBeanAsLazy.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>WrapBeanAsLazy</code>
+      <code>WrapBeanAsLazy</code>
+      <code>WrapBeanAsLazy</code>
+      <code>WrapBeanAsLazy</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/PropertyGenerator/AliasesProperty.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>AliasesProperty</code>
+      <code>AliasesProperty</code>
+      <code>AliasesProperty</code>
+      <code>AliasesProperty</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/PropertyGenerator/BeanFactoryConfigurationProperty.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>BeanFactoryConfigurationProperty</code>
+      <code>BeanFactoryConfigurationProperty</code>
+      <code>BeanFactoryConfigurationProperty</code>
+      <code>BeanFactoryConfigurationProperty</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/PropertyGenerator/BeanPostProcessorsProperty.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>BeanPostProcessorsProperty</code>
+      <code>BeanPostProcessorsProperty</code>
+      <code>BeanPostProcessorsProperty</code>
+      <code>BeanPostProcessorsProperty</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/PropertyGenerator/ForceLazyInitProperty.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>ForceLazyInitProperty</code>
+      <code>ForceLazyInitProperty</code>
+      <code>ForceLazyInitProperty</code>
+      <code>ForceLazyInitProperty</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/PropertyGenerator/ParameterValuesProperty.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>ParameterValuesProperty</code>
+      <code>ParameterValuesProperty</code>
+      <code>ParameterValuesProperty</code>
+      <code>ParameterValuesProperty</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/Configuration/PropertyGenerator/SessionBeansProperty.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>SessionBeansProperty</code>
+      <code>SessionBeansProperty</code>
+      <code>SessionBeansProperty</code>
+      <code>SessionBeansProperty</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/LazyBean/MethodGenerator/Constructor.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>Constructor</code>
+      <code>Constructor</code>
+      <code>Constructor</code>
+      <code>Constructor</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/LazyBean/MethodGenerator/MagicSleep.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>MagicSleep</code>
+      <code>MagicSleep</code>
+      <code>MagicSleep</code>
+      <code>MagicSleep</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/LazyBean/MethodGenerator/MagicWakeup.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>MagicWakeup</code>
+      <code>MagicWakeup</code>
+      <code>MagicWakeup</code>
+      <code>MagicWakeup</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/bitExpert/Disco/Proxy/LazyBean/PropertyGenerator/ValueHolderBeanIdProperty.php">
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>ValueHolderBeanIdProperty</code>
+      <code>ValueHolderBeanIdProperty</code>
+      <code>ValueHolderBeanIdProperty</code>
+      <code>ValueHolderBeanIdProperty</code>
+    </PropertyNotSetInConstructor>
+  </file>
+</files>

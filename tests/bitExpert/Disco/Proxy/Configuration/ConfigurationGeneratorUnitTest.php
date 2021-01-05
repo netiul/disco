@@ -16,16 +16,15 @@ use bitExpert\Disco\Config\BeanConfiguration;
 use bitExpert\Disco\Config\BeanConfigurationWithConflictingAliases;
 use bitExpert\Disco\Config\BeanConfigurationWithConflictingAliasesInParentClass;
 use bitExpert\Disco\Config\ExtendedBeanConfigurationOverwritingParentAlias;
-use bitExpert\Disco\Config\BeanConfigurationWithNativeTypeAlias;
 use bitExpert\Disco\Config\InterfaceConfiguration;
 use bitExpert\Disco\Config\InvalidConfiguration;
 use bitExpert\Disco\Config\MissingBeanAnnotationConfiguration;
 use bitExpert\Disco\Config\MissingReturnTypeConfiguration;
 use bitExpert\Disco\Config\NonExistentReturnTypeConfiguration;
+use Laminas\Code\Generator\ClassGenerator;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use ProxyManager\Exception\InvalidProxiedClassException;
-use Zend\Code\Generator\ClassGenerator;
 
 /**
  * Unit tests for {@link \bitExpert\Disco\Proxy\Configuration\ConfigurationGenerator}.
@@ -38,7 +37,7 @@ class ConfigurationGeneratorUnitTest extends TestCase
     private $configGenerator;
 
     /**
-     * @var ClassGenerator&\PHPUnit\Framework\MockObject\MockObject
+     * @var ClassGenerator&MockObject
      */
     private $classGenerator;
 
@@ -50,7 +49,7 @@ class ConfigurationGeneratorUnitTest extends TestCase
         parent::setUp();
 
         $this->configGenerator = new ConfigurationGenerator();
-        /** @var ClassGenerator&\PHPUnit\Framework\MockObject\MockObject $mock */
+        /** @var ClassGenerator&MockObject $mock */
         $mock = $this->createMock(ClassGenerator::class);
         $this->classGenerator = $mock;
     }
@@ -58,7 +57,7 @@ class ConfigurationGeneratorUnitTest extends TestCase
     /**
      * @test
      */
-    public function configClassWithoutAnAnnotationThrowsException()
+    public function configClassWithoutAnAnnotationThrowsException(): void
     {
         self::expectException(InvalidProxiedClassException::class);
 
@@ -69,7 +68,7 @@ class ConfigurationGeneratorUnitTest extends TestCase
     /**
      * @test
      */
-    public function passingInterfaceAsConfigClassThrowsException()
+    public function passingInterfaceAsConfigClassThrowsException(): void
     {
         self::expectException(InvalidProxiedClassException::class);
 
@@ -80,7 +79,7 @@ class ConfigurationGeneratorUnitTest extends TestCase
     /**
      * @test
      */
-    public function missingBeanAnnotationThrowsException()
+    public function missingBeanAnnotationThrowsException(): void
     {
         self::expectException(InvalidProxiedClassException::class);
 
@@ -91,7 +90,7 @@ class ConfigurationGeneratorUnitTest extends TestCase
     /**
      * @test
      */
-    public function missingReturnTypeOfBeanDeclarationThrowsException()
+    public function missingReturnTypeOfBeanDeclarationThrowsException(): void
     {
         self::expectException(InvalidProxiedClassException::class);
 
@@ -102,7 +101,7 @@ class ConfigurationGeneratorUnitTest extends TestCase
     /**
      * @test
      */
-    public function nonExistentClassInReturnTypeThrowsException()
+    public function nonExistentClassInReturnTypeThrowsException(): void
     {
         self::expectException(InvalidProxiedClassException::class);
 
@@ -113,7 +112,7 @@ class ConfigurationGeneratorUnitTest extends TestCase
     /**
      * @test
      */
-    public function sameAliasUsedForMultipleBeansThrowsException()
+    public function sameAliasUsedForMultipleBeansThrowsException(): void
     {
         self::expectException(InvalidProxiedClassException::class);
 
@@ -124,10 +123,10 @@ class ConfigurationGeneratorUnitTest extends TestCase
     /**
      * @test
      */
-    public function unknownAnnotationThrowsException()
+    public function unknownAnnotationThrowsException(): void
     {
         self::expectException(InvalidProxiedClassException::class);
-        self::expectExceptionMessageRegExp('/^\[Semantical Error\] The annotation "@foo"/');
+        self::expectExceptionMessageMatches('/^\[Semantical Error\] The annotation "@foo"/');
 
         /**
          * @foo
@@ -146,7 +145,7 @@ class ConfigurationGeneratorUnitTest extends TestCase
     /**
      * @test
      */
-    public function parsingConfigurationWithoutAnyErrorsSucceeds()
+    public function parsingConfigurationWithoutAnyErrorsSucceeds(): void
     {
         $this->classGenerator->expects(self::atLeastOnce())
             ->method('addMethodFromGenerator');
@@ -158,7 +157,7 @@ class ConfigurationGeneratorUnitTest extends TestCase
     /**
      * @test
      */
-    public function subclassedConfigurationIsAllowedToOverrwriteParentAlias()
+    public function subclassedConfigurationIsAllowedToOverrwriteParentAlias(): void
     {
         $this->classGenerator->expects(self::atLeastOnce())
             ->method('addMethodFromGenerator');
@@ -170,7 +169,7 @@ class ConfigurationGeneratorUnitTest extends TestCase
     /**
      * @test
      */
-    public function parsingConfigurationWithConflictingAliasesInParentConfigurationFails()
+    public function parsingConfigurationWithConflictingAliasesInParentConfigurationFails(): void
     {
         self::expectException(InvalidProxiedClassException::class);
 

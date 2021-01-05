@@ -31,19 +31,22 @@ class BeanFactoryConfiguration
     /**
      * @var BeanStore
      */
-    protected $sessionBeanStore;
+    protected BeanStore $sessionBeanStore;
+
     /**
      * @var string
      */
-    protected $proxyTargetDir;
+    protected string $proxyTargetDir;
+
     /**
      * @var GeneratorStrategyInterface
      */
-    protected $proxyWriterGenerator;
+    protected GeneratorStrategyInterface $proxyWriterGenerator;
+
     /**
-     * @var AutoloaderInterface
+     * @var AutoloaderInterface|null
      */
-    protected $proxyAutoloader;
+    protected ?AutoloaderInterface $proxyAutoloader = null;
 
     /**
      * Creates a new {@link \bitExpert\Disco\BeanFactoryConfiguration}.
@@ -51,17 +54,17 @@ class BeanFactoryConfiguration
      * @param string $proxyTargetDir
      * @throws InvalidArgumentException
      */
-    public function __construct($proxyTargetDir)
+    public function __construct(string $proxyTargetDir)
     {
         try {
             $proxyFileLocator = new FileLocator($proxyTargetDir);
         } catch (\Exception $e) {
             throw new InvalidArgumentException(
-                sprintf(
+                \sprintf(
                     'Proxy target directory "%s" does not exist!',
                     $proxyTargetDir
                 ),
-                $e->getCode(),
+                (int) $e->getCode(),
                 $e
             );
         }
@@ -79,7 +82,7 @@ class BeanFactoryConfiguration
      */
     public function setProxyTargetDir(string $proxyTargetDir): void
     {
-        if (!is_dir($proxyTargetDir)) {
+        if (!\is_dir($proxyTargetDir)) {
             throw new InvalidArgumentException(
                 sprintf(
                     'Proxy target directory "%s" does not exist!',
@@ -89,9 +92,9 @@ class BeanFactoryConfiguration
             );
         }
 
-        if (!is_writable($proxyTargetDir)) {
+        if (!\is_writable($proxyTargetDir)) {
             throw new InvalidArgumentException(
-                sprintf(
+                \sprintf(
                     'Proxy target directory "%s" is not writable!',
                     $proxyTargetDir
                 ),
@@ -123,12 +126,12 @@ class BeanFactoryConfiguration
     public function setProxyAutoloader(AutoloaderInterface $autoloader): void
     {
         if ($this->proxyAutoloader instanceof AutoloaderInterface) {
-            spl_autoload_unregister($this->proxyAutoloader);
+            \spl_autoload_unregister($this->proxyAutoloader);
         }
 
         $this->proxyAutoloader = $autoloader;
 
-        spl_autoload_register($this->proxyAutoloader);
+        \spl_autoload_register($this->proxyAutoloader);
     }
 
     /**
@@ -142,11 +145,9 @@ class BeanFactoryConfiguration
         $proxyManagerConfiguration = new Configuration();
         $proxyManagerConfiguration->setProxiesTargetDir($this->proxyTargetDir);
 
-        if ($this->proxyWriterGenerator instanceof GeneratorStrategyInterface) {
-            $proxyManagerConfiguration->setGeneratorStrategy($this->proxyWriterGenerator);
-        }
+        $proxyManagerConfiguration->setGeneratorStrategy($this->proxyWriterGenerator);
 
-        if ($this->proxyAutoloader instanceof AutoloaderInterface) {
+        if (isset($this->proxyAutoloader)) {
             $proxyManagerConfiguration->setProxyAutoloader($this->proxyAutoloader);
         }
 

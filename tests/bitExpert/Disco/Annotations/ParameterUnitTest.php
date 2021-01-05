@@ -23,7 +23,7 @@ class ParameterUnitTest extends TestCase
     /**
      * @test
      */
-    public function missingNameWillThrowAnnotationException()
+    public function missingNameWillThrowAnnotationException(): void
     {
         self::expectException(AnnotationException::class);
 
@@ -33,7 +33,7 @@ class ParameterUnitTest extends TestCase
     /**
      * @test
      */
-    public function parameterNameIsParsed()
+    public function parameterNameIsParsed(): void
     {
         $parameter = new Parameter(['value' => ['name' => 'myParam']]);
 
@@ -43,7 +43,7 @@ class ParameterUnitTest extends TestCase
     /**
      * @test
      */
-    public function defaultValueDefaultsToNull()
+    public function defaultValueDefaultsToNull(): void
     {
         $parameter = new Parameter(['value' => ['name' => 'myParam']]);
 
@@ -53,8 +53,10 @@ class ParameterUnitTest extends TestCase
     /**
      * @test
      * @dataProvider defaultValueDataProvider
+     *
+     * @param mixed $defaultValue
      */
-    public function defaultValueIsParsed($defaultValue)
+    public function defaultValueIsParsed($defaultValue): void
     {
         $parameter = new Parameter(['value' => ['name' => 'myParam', 'default' => $defaultValue]]);
 
@@ -64,7 +66,7 @@ class ParameterUnitTest extends TestCase
     /**
      * @test
      */
-    public function requireDefaultsToTrue()
+    public function requireDefaultsToTrue(): void
     {
         $parameter = new Parameter(['value' => ['name' => 'myParam']]);
 
@@ -75,14 +77,17 @@ class ParameterUnitTest extends TestCase
      * @test
      * @dataProvider requireDataProvider
      */
-    public function requireIsParsed($requireValue)
+    public function requireIsParsed(bool $requireValue): void
     {
         $parameter = new Parameter(['value' => ['name' => 'myParam', 'required' => $requireValue]]);
 
         self::assertSame($requireValue, $parameter->isRequired());
     }
 
-    public function defaultValueDataProvider()
+    /**
+     * @return array<array-key, list<scalar|bool|null>>
+     */
+    public function defaultValueDataProvider(): array
     {
         return [
             'defaultValue is a string' => ['myDefaultValue'],
@@ -94,7 +99,10 @@ class ParameterUnitTest extends TestCase
         ];
     }
 
-    public function requireDataProvider()
+    /**
+     * @return array<array-key, array<bool>>
+     */
+    public function requireDataProvider(): array
     {
         return [
             [true],

@@ -24,7 +24,7 @@ class BeanPostProcessorUnitTest extends TestCase
     /**
      * @test
      */
-    public function configuredParametersGetReturned()
+    public function configuredParametersGetReturned(): void
     {
         $bean = new Bean([
             'value' => [
@@ -49,7 +49,7 @@ class BeanPostProcessorUnitTest extends TestCase
     /**
      * @test
      */
-    public function throwsExceptionIfParameterTypeDoesNotMatch()
+    public function throwsExceptionIfParameterTypeDoesNotMatch(): void
     {
         self::expectException(TypeError::class);
 

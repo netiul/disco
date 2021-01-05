@@ -14,7 +14,7 @@ namespace bitExpert\Disco\Helper;
 
 class MasterService
 {
-    public $service;
+    public SampleService $service;
 
     public function __construct(SampleService $service)
     {

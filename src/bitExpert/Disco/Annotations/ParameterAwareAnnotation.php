@@ -20,7 +20,7 @@ abstract class ParameterAwareAnnotation
     /**
      * @var Parameter[]
      */
-    private $parameters;
+    private array $parameters;
 
     /**
      * Creates a new {@link \bitExpert\Disco\Annotations\ParameterAwareAnnotation}.
@@ -42,9 +42,9 @@ abstract class ParameterAwareAnnotation
     }
 
     /**
-     * Helper methd to ensure that the passed parameters are of {@link \bitExpert\Disco\Annotations\Parameter} type.
+     * Helper method to ensure that the passed parameters are of {@link \bitExpert\Disco\Annotations\Parameter} type.
      *
-     * @param Parameter[] ...$parameters
+     * @param Parameter ...$parameters
      */
     protected function setParameters(Parameter ...$parameters): void
     {

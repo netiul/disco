@@ -18,8 +18,7 @@ use bitExpert\Disco\Proxy\Configuration\PropertyGenerator\BeanPostProcessorsProp
 use bitExpert\Disco\Proxy\Configuration\PropertyGenerator\ParameterValuesProperty;
 use bitExpert\Disco\Proxy\Configuration\PropertyGenerator\SessionBeansProperty;
 use ProxyManager\Generator\MethodGenerator;
-use ReflectionClass;
-use Zend\Code\Generator\ParameterGenerator;
+use Laminas\Code\Generator\ParameterGenerator;
 
 /**
  * `__construct` method for the generated config proxy class.

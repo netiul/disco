@@ -15,7 +15,6 @@ namespace bitExpert\Disco\Proxy\Configuration;
 use bitExpert\Disco\Annotations\Bean;
 use bitExpert\Disco\Annotations\BeanPostProcessor;
 use bitExpert\Disco\Annotations\Configuration;
-use bitExpert\Disco\Annotations\Parameters;
 use bitExpert\Disco\Proxy\Configuration\MethodGenerator\BeanMethod;
 use bitExpert\Disco\Proxy\Configuration\MethodGenerator\BeanPostProcessorMethod;
 use bitExpert\Disco\Proxy\Configuration\MethodGenerator\Constructor;
@@ -38,9 +37,10 @@ use ProxyManager\ProxyGenerator\Assertion\CanProxyAssertion;
 use ProxyManager\ProxyGenerator\ProxyGeneratorInterface;
 use ReflectionClass;
 use ReflectionMethod;
-use Zend\Code\Generator\ClassGenerator;
-use Zend\Code\Generator\Exception\InvalidArgumentException;
-use Zend\Code\Reflection\MethodReflection;
+use Laminas\Code\Generator\ClassGenerator;
+use Laminas\Code\Generator\Exception\InvalidArgumentException;
+use Laminas\Code\Reflection\MethodReflection;
+use ReflectionNamedType;
 
 /**
  * Generator for configuration classes.
@@ -84,7 +84,7 @@ class ConfigurationGenerator implements ProxyGeneratorInterface
             $reader = new AnnotationReader();
             $annotation = $reader->getClassAnnotation($originalClass, Configuration::class);
         } catch (Exception $e) {
-            throw new InvalidProxiedClassException($e->getMessage(), $e->getCode(), $e);
+            throw new InvalidProxiedClassException($e->getMessage(), (int) $e->getCode(), $e);
         }
 
         if (null === $annotation) {
@@ -110,6 +110,7 @@ class ConfigurationGenerator implements ProxyGeneratorInterface
         $localAliases = [];
         $methods = $originalClass->getMethods(ReflectionMethod::IS_PUBLIC | ReflectionMethod::IS_PROTECTED);
         foreach ($methods as $method) {
+            /** @var class-string $method->class */
             $methodReflection = new MethodReflection(
                 $method->class,
                 $method->name
@@ -118,7 +119,7 @@ class ConfigurationGenerator implements ProxyGeneratorInterface
             /** @var \bitExpert\Disco\Annotations\Bean|null $beanAnnotation */
             $beanAnnotation = $reader->getMethodAnnotation($method, Bean::class);
             if (null === $beanAnnotation) {
-                /** @var \bitExpert\Disco\Annotations\BeanPostProcessor $beanAnnotation */
+                /** @var \bitExpert\Disco\Annotations\BeanPostProcessor|null $beanAnnotation */
                 $beanAnnotation = $reader->getMethodAnnotation($method, BeanPostProcessor::class);
                 if ($beanAnnotation instanceof BeanPostProcessor) {
                     $postProcessorMethods[] = $method->name;
@@ -147,16 +148,29 @@ class ConfigurationGenerator implements ProxyGeneratorInterface
             }
 
             foreach ($beanAnnotation->getAliases() as $beanAlias) {
-                $alias = $beanAlias->isTypeAlias() ? (string) $method->getReturnType() : $beanAlias->getName();
+                if ($beanAlias->isTypeAlias()) {
+                    $returnType = $method->getReturnType();
+                    if (!($returnType instanceof ReflectionNamedType)) {
+                        throw new InvalidProxiedClassException(
+                            sprintf(
+                                'Method "%s" on "%s" has an unsupported return type hint!',
+                                $methodReflection->name,
+                                $methodReflection->class
+                            )
+                        );
+                    }
+                    $alias = $returnType->getName();
+                } else {
+                    $alias = $beanAlias->getName();
+                }
                 if (empty($alias)) {
                     continue;
                 }
 
-                $hasAlias = '';
                 if ($method->getDeclaringClass()->name === $originalClass->name) {
                     $hasAlias = $localAliases[$alias] ?? '';
                 } else {
-                    $hasAlias= $parentAliases[$alias] ?? '';
+                    $hasAlias = $parentAliases[$alias] ?? '';
                 }
 
                 if ($hasAlias !== '') {

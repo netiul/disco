@@ -16,6 +16,9 @@ use bitExpert\Disco\BeanPostProcessor;
 
 class ParameterizedSampleServiceBeanPostProcessor implements BeanPostProcessor
 {
+    /**
+     * @var mixed
+     */
     protected $dependency;
 
     /**

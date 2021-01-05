@@ -22,22 +22,22 @@ use bitExpert\Disco\Proxy\Configuration\ConfigurationFactory;
  */
 class AnnotationBeanFactory implements BeanFactory
 {
-    /**
-     * @var AliasContainerInterface
-     */
-    protected $beanConfig;
+    protected AliasContainerInterface $beanConfig;
 
     /**
      * Creates a new {@link \bitExpert\Disco\BeanFactory}.
      *
-     * @param string                   $configClassName
-     * @param array                    $parameters
-     * @param BeanFactoryConfiguration $config
+     * @param class-string                  $configClassName
+     * @param array<mixed>                  $parameters
+     * @param BeanFactoryConfiguration|null $config
      */
-    public function __construct($configClassName, array $parameters = [], BeanFactoryConfiguration $config = null)
-    {
+    public function __construct(
+        string $configClassName,
+        array $parameters = [],
+        BeanFactoryConfiguration $config = null
+    ) {
         if ($config === null) {
-            $config = new BeanFactoryConfiguration(sys_get_temp_dir());
+            $config = new BeanFactoryConfiguration(\sys_get_temp_dir());
         }
 
         $configFactory = new ConfigurationFactory($config);
@@ -51,30 +51,30 @@ class AnnotationBeanFactory implements BeanFactory
      */
     public function get($id)
     {
-        if (!is_string($id) || empty($id)) {
+        if (empty($id)) {
             throw new BeanException('Id must be a non-empty string.');
         }
 
         $instance = null;
 
         try {
-            if (is_callable([$this->beanConfig, $id])) {
+            if (\is_callable([$this->beanConfig, $id])) {
                 $instance = $this->beanConfig->$id();
             } elseif ($this->beanConfig->hasAlias($id)) {
                 $instance = $this->beanConfig->getAlias($id);
             }
         } catch (\Throwable $e) {
-            $message = sprintf(
+            $message = \sprintf(
                 'Exception occurred while instantiating "%s": %s',
                 $id,
                 $e->getMessage()
             );
 
-            throw new BeanException($message, $e->getCode(), $e);
+            throw new BeanException($message, (int) $e->getCode(), $e);
         }
 
         if (null === $instance) {
-            throw new BeanNotFoundException(sprintf('"%s" is not defined!', $id));
+            throw new BeanNotFoundException(\sprintf('"%s" is not defined!', $id));
         }
 
         return $instance;
@@ -85,10 +85,10 @@ class AnnotationBeanFactory implements BeanFactory
      */
     public function has($id)
     {
-        if (!is_string($id) || empty($id)) {
+        if (empty($id)) {
             return false;
         }
 
-        return is_callable([$this->beanConfig, $id]) || $this->beanConfig->hasAlias($id);
+        return \is_callable([$this->beanConfig, $id]) || $this->beanConfig->hasAlias($id);
     }
 }

@@ -24,7 +24,7 @@ interface InitializedBean
     /**
      * Callback method to check bean configuration.
      *
-     * @throws \bitExpert\Disco\BeanException
+     * @throws BeanException
      */
     public function postInitialization(): void;
 }

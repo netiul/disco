@@ -27,19 +27,19 @@ use Doctrine\Common\Annotations\AnnotationException;
 final class Alias
 {
     /**
-     * @var string
+     * @var string|null
      */
-    private $name;
+    private ?string $name = null;
 
     /**
      * @var bool
      */
-    private $type;
+    private bool $type;
 
     /**
-     * Creates a new {@link \bitExpert\Disco\Annotations\Bean\Alias}.
+     * Creates a new {@link \bitExpert\Disco\Annotations\Alias}.
      *
-     * @param array $attributes
+     * @psalm-param array{value?:array{type?:bool|string,name?:string}} $attributes
      * @throws AnnotationException
      */
     public function __construct(array $attributes = [])

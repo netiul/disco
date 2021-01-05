@@ -30,25 +30,34 @@ final class Parameter
     /**
      * @var string
      */
-    private $name;
+    private string $name;
+
     /**
-     * @var mixed
+     * @var scalar|null
      */
     private $defaultValue;
+
     /**
      * @var bool
      */
-    private $required;
+    private bool $required;
 
     /**
      * Creates a new {@link \bitExpert\Disco\Annotations\Parameter}.
      *
-     * @param array $attributes
+     * @psalm-param array{
+     *  value?:array{
+     *      name?:string,
+     *      default?:scalar,
+     *      required?:bool|string
+     *  }
+     * } $attributes
      * @throws AnnotationException
      */
     public function __construct(array $attributes = [])
     {
         $this->required = true;
+        $this->defaultValue = null;
 
         if (isset($attributes['value'])) {
             if (isset($attributes['value']['name'])) {
@@ -64,7 +73,7 @@ final class Parameter
             }
         }
 
-        if (!$this->name) {
+        if (empty($this->name)) {
             throw new AnnotationException('name attribute missing!');
         }
     }
@@ -82,7 +91,7 @@ final class Parameter
     /**
      * Returns the default value to use in case the configuration value is not defined.
      *
-     * @return mixed
+     * @return scalar|null
      */
     public function getDefaultValue()
     {

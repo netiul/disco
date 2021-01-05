@@ -14,6 +14,9 @@ namespace bitExpert\Disco\Helper;
 
 class SampleService implements SampleServiceInterface
 {
+    /**
+     * @var mixed
+     */
     public $test;
 
     /**
@@ -21,7 +24,7 @@ class SampleService implements SampleServiceInterface
      *
      * @param mixed $test
      */
-    public function setTest($test)
+    public function setTest($test): void
     {
         $this->test = $test;
     }

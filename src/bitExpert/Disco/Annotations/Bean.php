@@ -14,7 +14,6 @@ namespace bitExpert\Disco\Annotations;
 
 use Doctrine\Common\Annotations\Annotation\Attribute;
 use Doctrine\Common\Annotations\Annotation\Attributes;
-use Doctrine\Common\Annotations\AnnotationException;
 
 /**
  * @Annotation
@@ -31,28 +30,39 @@ final class Bean extends ParameterAwareAnnotation
 {
     const SCOPE_REQUEST = 1;
     const SCOPE_SESSION = 2;
+
     /**
      * @var int
      */
-    protected $scope;
+    protected int $scope;
+
     /**
      * @var bool
      */
-    protected $singleton;
+    protected bool $singleton;
+
     /**
      * @var bool
      */
-    protected $lazy;
+    protected bool $lazy;
+
     /**
      * @var Alias[]
      */
-    protected $aliases;
+    protected array $aliases;
 
     /**
      * Creates a new {@link \bitExpert\Disco\Annotations\Bean}.
      *
-     * @param array $attributes
-     * @throws AnnotationException
+     * @psalm-param array{
+     *  value?:array{
+     *      scope?:string,
+     *      singleton?:bool|string,
+     *      lazy?:bool|string,
+     *      aliases?:array<Alias>,
+     *      parameters?:array<Parameter>
+     *  }
+     * } $attributes
      */
     public function __construct(array $attributes = [])
     {
@@ -77,11 +87,11 @@ final class Bean extends ParameterAwareAnnotation
                 $this->lazy = AnnotationAttributeParser::parseBooleanValue($attributes['value']['lazy']);
             }
 
-            if (isset($attributes['value']['aliases']) && \is_array($attributes['value']['aliases'])) {
+            if (isset($attributes['value']['aliases'])) {
                 $this->setAliases(...$attributes['value']['aliases']);
             }
 
-            if (isset($attributes['value']['parameters']) && \is_array($attributes['value']['parameters'])) {
+            if (isset($attributes['value']['parameters'])) {
                 $this->setParameters(...$attributes['value']['parameters']);
             }
         }

@@ -30,6 +30,9 @@ class BeanConfigurationWithParameterizedPostProcessor
      *      @Parameter({"name" = "test"})
      *   }
      * })
+     *
+     * @param mixed $test
+     * @return ParameterizedSampleServiceBeanPostProcessor
      */
     public function sampleServiceBeanPostProcessor($test = ''): ParameterizedSampleServiceBeanPostProcessor
     {
